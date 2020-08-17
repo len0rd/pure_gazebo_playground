@@ -1,0 +1,73 @@
+<?xml version='1.0'?>
+<sdf version="1.4">
+    <model name="pitch_yaw_gimbal">
+        <static>true</static> <!--Model is not affected by physics. Set to true when creating/modifying the model itsef-->
+        <link name="pitch_arm">
+            <!--Position (x,y,z) in meters then orientation (r,p,y) in rad(?) of the link-->
+            <pose>0 0 0.1 0 0 0</pose>
+
+            <collision name="aircraft_to_pitch_arms">
+                <!--Use a box to represent the part of the gimbal that attaches to the aircraft. From this
+                    piece, the two pitch arms come out-->
+                <geometry>
+                    <box>
+                        <size>.15 .01 .05</size>
+                    </box>
+                </geometry>
+            </collision>
+            <collision name="pitch_arm_right">
+                <!--Pitch arm on the left on the gimbal when looking down from above-->
+                <pose>.07 .05 0 0 0 0</pose>
+                <geometry>
+                    <box>
+                        <size>.01 .1 .025</size>
+                    </box>
+                </geometry>
+            </collision>
+            <collision name="pitch_arm_left">
+                <!--Pitch arm on the right on the gimbal when looking down from above-->
+                <pose>-.07 .05 0 0 0 0</pose>
+                <geometry>
+                    <box>
+                        <size>.01 .1 .025</size>
+                    </box>
+                </geometry>
+            </collision>
+
+            <!--For now the visuals will be exactly the same-->
+            <visual name="aircraft_to_pitch_arms_vis">
+                <geometry>
+                    <box>
+                        <size>.15 .01 .05</size>
+                    </box>
+                </geometry>
+            </visual>
+            <visual name="pitch_arm_right_vis">
+                <pose>.07 .05 0 0 0 0</pose>
+                <geometry>
+                    <box>
+                        <size>.01 .1 .025</size>
+                    </box>
+                </geometry>
+            </visual>
+            <visual name="pitch_arm_left_vis">
+                <pose>-.07 .05 0 0 0 0</pose>
+                <geometry>
+                    <box>
+                        <size>.01 .1 .025</size>
+                    </box>
+                </geometry>
+            </visual>
+        </link>
+
+        <link name="yaw_arm">
+            <!--The box arm that holds the yaw motor. this is a child of the pitch arm
+                Y origin should be just about at the end of the pitch arms length-->
+            <pose>0 .08 0 0 0 0 </pose>
+            <collision name="yaw_arm_left">
+                <pose></pose>
+            </collision>
+        </link>
+
+    </model>
+</sdf>
