@@ -1,7 +1,7 @@
 <?xml version='1.0'?>
 <sdf version="1.4">
     <model name="pitch_yaw_gimbal">
-        <static>true</static> <!--Model is not affected by physics. Set to true when creating/modifying the model itsef-->
+        <static>false</static> <!--Model is not affected by physics. Set to true when creating/modifying the model itsef-->
         <link name="pitch_arm">
             <!--Position (x,y,z) in meters then orientation (r,p,y) in rad(?) of the link-->
             <pose>0 0 0.1 0 0 0</pose>
@@ -63,11 +63,90 @@
         <link name="yaw_arm">
             <!--The box arm that holds the yaw motor. this is a child of the pitch arm
                 Y origin should be just about at the end of the pitch arms length-->
-            <pose>0 .08 0 0 0 0 </pose>
+            <pose>0 .09 0.1 0 0 0</pose>
             <collision name="yaw_arm_left">
-                <pose></pose>
+                <pose>-.059 0 0 0 0 0</pose>
+                <geometry>
+                    <box>
+                        <size>.01 .025 .15</size>
+                    </box>
+                </geometry>
             </collision>
+            <collision name="yaw_arm_right">
+                <pose>.059 0 0 0 0 0</pose>
+                <geometry>
+                    <box>
+                        <size>.01 .025 .15</size>
+                    </box>
+                </geometry>
+            </collision>
+            <collision name="yaw_arm_top">
+                <pose>0 0 .075 0 0 0</pose>
+                <geometry>
+                    <box>
+                        <size>.128 .025 .01</size>
+                    </box>
+                </geometry>
+            </collision>
+            <collision name="yaw_arm_bottom">
+                <pose>0 0 -.075 0 0 0</pose>
+                <geometry>
+                    <box>
+                        <size>.128 .025 .01</size>
+                    </box>
+                </geometry>
+            </collision>
+
+            <!--For now the visuals will be exactly the same-->
+            <visual name="yaw_arm_left_vis">
+                <pose>-.059 0 0 0 0 0</pose>
+                <geometry>
+                    <box>
+                        <size>.01 .025 .15</size>
+                    </box>
+                </geometry>
+            </visual>
+            <visual name="yaw_arm_right_vis">
+                <pose>.059 0 0 0 0 0</pose>
+                <geometry>
+                    <box>
+                        <size>.01 .025 .15</size>
+                    </box>
+                </geometry>
+            </visual>
+            <visual name="yaw_arm_top_vis">
+                <pose>0 0 .075 0 0 0</pose>
+                <geometry>
+                    <box>
+                        <size>.128 .025 .01</size>
+                    </box>
+                </geometry>
+            </visual>
+            <visual name="yaw_arm_bottom_vis">
+                <pose>0 0 -.075 0 0 0</pose>
+                <geometry>
+                    <box>
+                        <size>.128 .025 .01</size>
+                    </box>
+                </geometry>
+            </visual>
+
         </link>
+
+        <!--Pitch to yaw arm joint-->
+        <joint type="revolute" name="pitch_yaw_joint">
+            <!--
+                initial pose of the joint is based on the main pose of the child link
+                (in this case the center of the yaw arm)
+                x pose is equal to yaw_arm_left or yaw_arm_right x pose-->
+            <pose>-.06 0 0 0 0 0</pose>
+            <parent>pitch_arm</parent>
+            <child>yaw_arm</child>
+            <!--define axis of revolution-->
+            <axis>
+                <xyz>1 0 0</xyz>
+            </axis>
+        </joint>
 
     </model>
 </sdf>
