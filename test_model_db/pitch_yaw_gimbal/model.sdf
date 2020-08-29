@@ -5,7 +5,23 @@
         <link name="pitch_arm">
             <!--Position (x,y,z) in meters then orientation (r,p,y) in rad(?) of the link-->
             <pose>0 0 0.1 0 0 0</pose>
-
+            <inertial>
+                <mass>0.02</mass> <!--Mass in kg-->
+                <inertia> <!--  -->
+                    <!--
+                        For simplicity, treat as a solid rectangle
+                        http://gazebosim.org/tutorials?tut=inertia&cat=build_robot
+                        Use https://en.wikipedia.org/wiki/List_of_moments_of_inertia
+                        For now treat like a box? 15x9x4cm box
+                    -->
+                    <ixx>0.0000161</ixx>   <!-- for a box: ixx = 0.083 * mass * (y*y + z*z) -->
+                    <ixy>0.0</ixy>         <!-- for a box: ixy = 0 -->
+                    <ixz>0.0</ixz>         <!-- for a box: ixz = 0 -->
+                    <iyy>0.00004001</iyy>  <!-- for a box: iyy = 0.083 * mass * (x*x + z*z) -->
+                    <iyz>0.0</iyz>         <!-- for a box: iyz = 0 -->
+                    <izz>0.0000508</izz>   <!-- for a box: izz = 0.083 * mass * (x*x + y*y) -->
+                </inertia>
+            </inertial>
             <collision name="aircraft_to_pitch_arms">
                 <!--Use a box to represent the part of the gimbal that attaches to the aircraft. From this
                     piece, the two pitch arms come out-->
@@ -64,6 +80,26 @@
             <!--The box arm that holds the yaw motor. this is a child of the pitch arm
                 Y origin should be just about at the end of the pitch arms length-->
             <pose>0 .09 0.1 0 0 0</pose>
+            <inertial>
+                <mass>.015</mass> <!--Mass is in kg-->
+                <!--
+                    For simplicity, treat as a solid rectangle
+                    Use https://en.wikipedia.org/wiki/List_of_moments_of_inertia
+                    to calculate inertia "tensor"/matrix. Note that side definitions
+                    (height, width, depth) are dependent on the axis of rotation
+                    for the yaw arm:
+                    depth/z  = .15
+                    width/x  = .128
+                    height/y = .025 -->
+                <inertia>
+                    <ixx>0.00002890625</ixx> <!--1/12 * m * (h^2 + d^2)-->
+                    <ixy>0</ixy>
+                    <ixz>0</ixz>
+                    <iyy>0.000048605</iyy> <!--1/12 * m * (w^2 + d^2)-->
+                    <iyz>0</iyz>
+                    <izz>0.00002126125</izz> <!--1/12 * m * (w^2 + h^2) -->
+                </inertia>
+            </inertial>
             <collision name="yaw_arm_left">
                 <pose>-.059 0 0 0 0 0</pose>
                 <geometry>
@@ -93,6 +129,14 @@
                 <geometry>
                     <box>
                         <size>.128 .025 .01</size>
+                    </box>
+                </geometry>
+            </collision>
+            <collision name="pitch_stop_top">
+                <pose>-.068 0 .075 0 0 0</pose>
+                <geometry>
+                    <box>
+                        <size>.01 .01 .01</size>
                     </box>
                 </geometry>
             </collision>
@@ -130,7 +174,104 @@
                     </box>
                 </geometry>
             </visual>
+            <visual name="pitch_stop_top_vis">
+                <pose>-.068 0 .075 0 0 0</pose>
+                <geometry>
+                    <box>
+                        <size>.01 .01 .01</size>
+                    </box>
+                </geometry>
+            </visual>
 
+        </link>
+
+        <link name="payload">
+            <!--Same pose as the yaw arm so its centered-->
+            <pose>0 .09 0.1 0 0 0</pose>
+            <inertial>
+                <!--Mass is in kg-->
+                <mass>.05</mass>
+                <!--
+                    For simplicity, treat gimbal payload as a solid cylinder
+                    Use https://en.wikipedia.org/wiki/List_of_moments_of_inertia
+                    to calculate inertia "tensor"/matrix-->
+                <inertia>
+                    <ixx>0.00010166667</ixx> <!--1/12 * m * (3r^2 + h^2) = .00010166667-->
+                    <ixy>0</ixy>
+                    <ixz>0</ixz>
+                    <iyy>0.00010166667</iyy> <!--1/12 * m * (3r^2 + h^2) = .00010166667-->
+                    <iyz>0</iyz>
+                    <izz>0.0000625</izz> <!--1/2 * m * r^2-->
+                </inertia>
+            </inertial>
+            <!--Collision is simple cylinder while visual is more complex-->
+            <collision name="payload">
+                <geometry>
+                    <cylinder>
+                        <radius>.05</radius>
+                        <length>.13</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <!-- <visual name="payload_vis">
+                <geometry>
+                    <cylinder>
+                        <radius>.05</radius>
+                        <length>.135</length>
+                    </cylinder>
+                </geometry>
+            </visual> -->
+            <visual name='payload_vis'>
+                <pose>0 0 -0.065 0 0 1.570795</pose>
+                <geometry>
+                <polyline>
+                    <height>0.125</height>
+                    <point>0.00760627 0.0492587</point>
+                    <point>0.0144458 0.0488088</point>
+                    <point>0.0212937 0.0475121</point>
+                    <point>0.0276877 0.0454477</point>
+                    <point>0.0331653 0.042695</point>
+                    <point>0.0372643 0.0393331</point>
+                    <point>0.0379975 0.038523</point>
+                    <point>0.0391229 0.0371049</point>
+                    <point>0.0403205 0.0351534</point>
+                    <point>0.0412703 0.0327429</point>
+                    <point>0.0416524 0.0299478</point>
+                    <point>0.0415674 0.000106743</point>
+                    <point>0.0415976 -0.0294405</point>
+                    <point>0.0413186 -0.0320958</point>
+                    <point>0.0405848 -0.0344677</point>
+                    <point>0.0395601 -0.0365048</point>
+                    <point>0.038408 -0.0381556</point>
+                    <point>0.0372925 -0.0393688</point>
+                    <point>0.0323942 -0.0430866</point>
+                    <point>0.0267909 -0.0458754</point>
+                    <point>0.0206682 -0.0477944</point>
+                    <point>0.0142115 -0.0489024</point>
+                    <point>0.00760627 -0.0492587</point>
+                    <point>-0.00796328 -0.0467474</point>
+                    <point>-0.0214853 -0.0397546</point>
+                    <point>-0.0321483 -0.0290915</point>
+                    <point>-0.0391412 -0.0155695</point>
+                    <point>-0.0416524 4.5579e-10</point>
+                    <point>-0.0391412 0.0155695</point>
+                    <point>-0.0321483 0.0290915</point>
+                    <point>-0.0214853 0.0397546</point>
+                    <point>-0.00796328 0.0467474</point>
+                    <point>0.00760627 0.0492587</point>
+                </polyline>
+                </geometry>
+                <material>
+                    <lighting>1</lighting>
+                    <script>
+                        <uri>file://media/materials/scripts/gazebo.material</uri>
+                        <name>Gazebo/Grey</name>
+                    </script>
+                    <shader type='pixel'/>
+                </material>
+                <transparency>0</transparency>
+                <cast_shadows>1</cast_shadows>
+            </visual>
         </link>
 
         <!--Pitch to yaw arm joint-->
@@ -145,6 +286,17 @@
             <!--define axis of revolution-->
             <axis>
                 <xyz>1 0 0</xyz>
+            </axis>
+        </joint>
+
+        <!--Yaw to payload joint-->
+        <joint type="revolute" name="yaw_payload_joint">
+            <pose>0 0 .065 0 0 0</pose>
+            <parent>yaw_arm</parent>
+            <child>payload</child>
+            <!--define axis of revolution-->
+            <axis>
+                <xyz>0 0 1</xyz>
             </axis>
         </joint>
 
