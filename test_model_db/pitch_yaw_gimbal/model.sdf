@@ -1,13 +1,14 @@
 <?xml version='1.0'?>
-<sdf version="1.4">
+<sdf version="1.6">
     <model name="pitch_yaw_gimbal">
-        <static>false</static> <!--Model is not affected by physics. Set to true when creating/modifying the model itsef-->
+        <!--Set to true to have mode not affected by physics. Useful when building the model-->
+        <static>false</static>
         <link name="pitch_arm">
             <!--Position (x,y,z) in meters then orientation (r,p,y) in rad(?) of the link-->
             <pose>0 0 0.1 0 0 0</pose>
             <inertial>
                 <mass>0.02</mass> <!--Mass in kg-->
-                <inertia> <!--  -->
+                <inertia>
                     <!--
                         For simplicity, treat as a solid rectangle
                         http://gazebosim.org/tutorials?tut=inertia&cat=build_robot
@@ -20,7 +21,9 @@
                     <iyy>0.00004001</iyy>  <!-- for a box: iyy = 0.083 * mass * (x*x + z*z) -->
                     <iyz>0.0</iyz>         <!-- for a box: iyz = 0 -->
                     <izz>0.0000508</izz>   <!-- for a box: izz = 0.083 * mass * (x*x + y*y) -->
+
                 </inertia>
+                <pose>0 0.05 0 0 0 0</pose>
             </inertial>
             <collision name="aircraft_to_pitch_arms">
                 <!--Use a box to represent the part of the gimbal that attaches to the aircraft. From this
@@ -286,6 +289,11 @@
             <!--define axis of revolution-->
             <axis>
                 <xyz>1 0 0</xyz>
+                <!--Define joint limits in radians (the visual mechanical stop doesnt do anything)-->
+                <limit>
+                    <lower>-1.420796</lower> <!--~90% pi/2-->
+                    <upper>1.420796</upper>
+                </limit>
             </axis>
         </joint>
 
@@ -297,6 +305,11 @@
             <!--define axis of revolution-->
             <axis>
                 <xyz>0 0 1</xyz>
+                <!--Define joint limits in radians-->
+                <limit>
+                    <lower>-0.9424778</lower> <!--~60% pi/2-->
+                    <upper>0.9424778</upper>
+                </limit>
             </axis>
         </joint>
 
