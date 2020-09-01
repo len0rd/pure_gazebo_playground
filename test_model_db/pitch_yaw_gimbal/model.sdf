@@ -275,6 +275,11 @@
                 <transparency>0</transparency>
                 <cast_shadows>1</cast_shadows>
             </visual>
+            <sensor name='imu_sensor' type='imu'>
+                <pose frame=''>0 0 0 0 -0 0</pose>
+                <always_on>1</always_on>
+                <update_rate>100</update_rate>
+            </sensor>
         </link>
 
         <!--Pitch to yaw arm joint-->
@@ -338,6 +343,8 @@
                 </ode>
             </physics>
         </joint>
+
+        <!-- <plugin name="gimbalJoints" filename="libgimbal_motor_plugin.so"/> -->
 
     </model>
 </sdf>
