@@ -293,8 +293,21 @@
                 <limit>
                     <lower>-1.420796</lower> <!--~90% pi/2-->
                     <upper>1.420796</upper>
+                    <effort>10</effort> <!--max effort you can apply to joint in Nm?-->
                 </limit>
+                <!--Dynamics makes the joint more realistic in sim-->
+                <dynamics>
+                    <damping>0.5</damping>
+                    <spring_reference>0</spring_reference>
+                    <spring_stiffness>0</spring_stiffness>
+                </dynamics>
             </axis>
+            <physics>
+                <!--ode is gazebos default physics engine. Properties here are specific to it-->
+                <ode>
+                    <implicit_spring_damper>1</implicit_spring_damper>
+                </ode>
+            </physics>
         </joint>
 
         <!--Yaw to payload joint-->
@@ -309,8 +322,21 @@
                 <limit>
                     <lower>-0.9424778</lower> <!--~60% pi/2-->
                     <upper>0.9424778</upper>
+                    <effort>10</effort> <!--max effort you can apply to joint in Nm?-->
                 </limit>
+                <!--Dynamics makes the joint more realistic in sim-->
+                <dynamics>
+                    <damping>0.5</damping>
+                    <spring_reference>0</spring_reference>
+                    <spring_stiffness>0</spring_stiffness>
+                </dynamics>
             </axis>
+            <physics>
+                <!--ode is gazebos default physics engine. Properties here are specific to it-->
+                <ode>
+                    <implicit_spring_damper>1</implicit_spring_damper>
+                </ode>
+            </physics>
         </joint>
 
     </model>
