@@ -1,0 +1,12 @@
+package gimbal_motor_plugin.msgs;
+
+import "time.proto";
+
+message GimbalMotorInfo {
+    /// Timestamp of the attached data
+    required gazebo.msgs.Time time   = 1;
+    /// Name of the gazebo sdf joint this 'motor' is attached to
+    required string jointName        = 2;
+    /// angular position of the motor in radians. 0 is the default, forward position of the joint
+    required double pose_rad         = 3;
+}
