@@ -344,7 +344,7 @@
             </physics>
         </joint>
 
-        <!-- <plugin name="gimbalJoints" filename="libgimbal_motor_plugin.so"/> -->
+        <plugin name="gimbalJoints" filename="libgimbal_motor_plugin.so"/>
 
     </model>
 </sdf>

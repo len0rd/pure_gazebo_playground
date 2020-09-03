@@ -1,3 +1,4 @@
+syntax = "proto2";
 package gimbal_motor_plugin.msgs;
 
 import "time.proto";
