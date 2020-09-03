@@ -59,7 +59,7 @@
       <pose frame=''>0 0.205 0.15 0 0 0</pose>
     </include>
 
-    <joint name="box_gimbal_joint" type='fixed'>
+    <joint name="box_gimbal_attach_joint" type='fixed'>
       <parent>cardboard_box::link</parent>
       <child>pitch_yaw_gimbal::pitch_arm</child>
       <pose>0 -0.005 0 0 0 0</pose>

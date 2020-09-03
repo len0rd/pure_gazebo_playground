@@ -25,7 +25,7 @@ int main(int argc, char **argv) {
 
   // Listen to Gazebo imu topic
   // I found this topic name using gazebo's "Topic Visualization" window: Window -> Topic Visualization
-  gazebo::transport::SubscriberPtr sub = node->Subscribe("~/gimbal_joints/test_pos", newData);
+  gazebo::transport::SubscriberPtr sub = node->Subscribe("~/gimbal_joints/info", newData);
 
   // Busy wait loop...replace with your own code as needed.
   while (true)

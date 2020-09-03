@@ -11,6 +11,7 @@ endforeach()
 
 set(msgs
     gimbal_motor_info.proto
+    gimbal_motor_cmd.proto
     ${PROTOBUF_IMPORT_DIRS}/time.proto
 )
 

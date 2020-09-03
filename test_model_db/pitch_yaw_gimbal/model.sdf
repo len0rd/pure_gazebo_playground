@@ -282,8 +282,9 @@
             </sensor>
         </link>
 
-        <!--Pitch to yaw arm joint-->
-        <joint type="revolute" name="pitch_yaw_joint">
+        <!--Pitch joint. Note: these names are important. The gimbalJoints plugin below
+            looks for "pitch_joint" or "yaw_joint" to identify joint type-->
+        <joint type="revolute" name="pitch_joint">
             <!--
                 initial pose of the joint is based on the main pose of the child link
                 (in this case the center of the yaw arm)
@@ -315,8 +316,9 @@
             </physics>
         </joint>
 
-        <!--Yaw to payload joint-->
-        <joint type="revolute" name="yaw_payload_joint">
+        <!--Yaw to payload joint Note: these names are important. The gimbalJoints plugin below
+            looks for "pitch_joint" or "yaw_joint" to identify joint type-->
+        <joint type="revolute" name="yaw_joint">
             <pose>0 0 .065 0 0 0</pose>
             <parent>yaw_arm</parent>
             <child>payload</child>

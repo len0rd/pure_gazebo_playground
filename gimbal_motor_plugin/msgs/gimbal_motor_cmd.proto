@@ -1,0 +1,18 @@
+syntax = "proto2";
+package gimbal_motor_plugin.msgs;
+
+message GimbalMotorCmd {
+    /// Name of the gazebo sdf joint to command
+    required string jointName       = 1;
+    /// whether to enable the motor or not
+    required bool   enable          = 2;
+    /// whether to set the joint to pose_des_rad
+    required bool  set_pose         = 3;
+    /// whether to set the joint force to torque_des_nm
+    /// if both set_pose and set_torque are true, the torque_des_nm value is used
+    required bool  set_torque       = 4;
+    /// desired angular position of the motor in radians. 0 is the default, forward position of the joint
+    required float pose_des_rad     = 5;
+    /// desired torque to apply to the motor
+    required float torque_des_nm    = 6;
+}

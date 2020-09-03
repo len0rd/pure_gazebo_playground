@@ -4,10 +4,22 @@ package gimbal_motor_plugin.msgs;
 import "time.proto";
 
 message GimbalMotorInfo {
+
+    enum GimbalJointType {
+        /// This motor is attached to the gimbals ROLL joint
+        ROLL = 1;
+        /// This motor is attached to the gimbals PITCH joint
+        PITCH = 2;
+        /// This motor is attached to the gimbals YAW joint
+        YAW = 3;
+    }
+
     /// Timestamp of the attached data
     required gazebo.msgs.Time time   = 1;
+    /// What type of gimbal joint this motor is attached to
+    required GimbalJointType jointType = 2;
     /// Name of the gazebo sdf joint this 'motor' is attached to
-    required string jointName        = 2;
+    required string jointName        = 3;
     /// angular position of the motor in radians. 0 is the default, forward position of the joint
-    required double pose_rad         = 3;
+    required double pose_rad         = 4;
 }
